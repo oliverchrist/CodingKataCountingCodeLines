@@ -98,14 +98,14 @@ class CountTest extends PHPUnit_Framework_TestCase {
             'echo $foo   // comment'
             )));
     }
-    
+   
     public function testTwoBlockCommentsInThreeLinesWithCode() {
         $this->assertEquals(3, $this->object->countLines(array(
-            'foo',
-            'echo /*foo',
-            'xxx',
-            'foo*/',
-            'echo $foo   // comment'
+            'eins',
+            'zwei /*foo',
+            'drei',
+            'vier*/',
+            'fuenf   // comment'
             )));
     }
     

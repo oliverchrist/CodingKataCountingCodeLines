@@ -11,40 +11,20 @@
  * @author christ
  */
 class Count {
-    
-    public function __construct() {
-        
-    }
-    
-    private function stripOneLineComments($line) {
-        $line = preg_replace('/\/\*.*?\*\//', '', $line);
-        $line = preg_replace('/\/\/.*/', '', $line);
+    private function stripComments($line) {
+        echo "\n\nVorher:\n" . $line;
+        $line = preg_replace('/\s*\/\/.*/', '', $line);// Doppelslash
+        $line = preg_replace('/\/\*[\s\S]*?\*\//', '', $line);// Block Quote
+        $line = preg_replace('/\n\s*\n/', "\n", $line);// leere Zeilen
+        echo "\nNachher:\n" . $line;
         return $line;
     }
 
-
     public function countLines(array $code) {
-        $lineCount = count($code);
-        $inComment = false;
-        $inFirstLineComment = false;
-        $codeLines = array();
-        foreach($code as $line){
-            $line = $this->stripOneLineComments($line);
-            if(preg_match('/^.*?\/\*/', $line) && !$inComment){
-                $line = preg_replace('/\/\*.*/', '', $line);
-                $inComment = true;
-                $inFirstLineComment = true;
-            }
-            if(preg_match('/^.*?\*\//', $line) && $inComment){
-                $line = preg_replace('/.*\*\//', '', $line);
-                $inComment = false;
-            }
-            if(strlen(trim($line)) == 0 && (!$inComment || $inFirstLineComment)){
-                $lineCount--;
-            }
-            $inFirstLineComment = false;
-        }
-        return $lineCount;
+        if(empty($code)) return 0;
+        $completeCode = $this->stripComments(implode("\n", $code));
+        $codeArray = explode("\n", $completeCode);
+        return count($codeArray);
     }
 }
 

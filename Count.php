@@ -12,11 +12,9 @@
  */
 class Count {
     private function stripComments($line) {
-        echo "\n\nVorher:\n" . $line;
         $line = preg_replace('/\s*\/\/.*/', '', $line);// Doppelslash
         $line = preg_replace('/\/\*[\s\S]*?\*\//', '', $line);// Block Quote
         $line = preg_replace('/\n\s*\n/', "\n", $line);// leere Zeilen
-        echo "\nNachher:\n" . $line;
         return $line;
     }
 
